@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  app2-postgres-db:
+    image: postgres:latest
+    container_name: app2-postgres-db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - app2-postgres-data:/var/lib/postgresql/data
+    ports:
+      - 5434:5432 # Different port from app1
+
+  app2-redis:
+    image: redis:latest
+    container_name: app2-redis
+    ports:
+      - '6380:6379' # Different Redis port
+    volumes:
+      - app2-redis-data:/data
+    command: ['redis-server', '--appendonly', 'yes']
+
+  app2-redisinsight:
+    image: redislabs/redisinsight:latest
+    container_name: app2-redisinsight
+    ports:
+      - '8002:8001' # Different RedisInsight port
+    volumes:
+      - app2-redisinsight-data:/db
+    depends_on:
+      - app2-redis
+
+volumes:
+  app2-postgres-data:
+  app2-postgres-data-test:
+  app2-redis-data:
+  app2-redisinsight-data:
