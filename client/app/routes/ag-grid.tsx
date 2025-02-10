@@ -6,5 +6,5 @@ export const Route = createFileRoute("/ag-grid")({
 });
 
 function RouteComponent() {
-  return <AgGridComponent rowData={[]} />;
+  return <AgGridComponent />;
 }

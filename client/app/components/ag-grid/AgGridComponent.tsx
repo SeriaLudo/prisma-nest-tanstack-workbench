@@ -1,16 +1,17 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { AgGridReact } from "ag-grid-react";
-import { getColumnDefs } from "./columnDefs";
+import { columnDefs as columns } from "./columnDefs";
 import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
+import rowData from "../gridData.json";
 
 // Register all Community features
 ModuleRegistry.registerModules([AllCommunityModule]);
 
-export default function AgGridComponent({ rowData }: { rowData: any[] }) {
-  const [columnDefs, setColumnDefs] = useState([]);
+export default function AgGridComponent() {
+  const [columnDefs, setColumnDefs] = useState(columns);
 
   useEffect(() => {
-    setColumnDefs(getColumnDefs(rowData) as any);
+    setColumnDefs(columnDefs);
   }, [rowData]);
 
   return (
@@ -18,7 +19,7 @@ export default function AgGridComponent({ rowData }: { rowData: any[] }) {
       className="ag-theme-alpine"
       style={{ height: 500, width: "100%", backgroundColor: "red" }}
     >
-      <AgGridReact rowData={rowData} columnDefs={columnDefs} />
+      <AgGridReact rowData={rowData} columnDefs={columns as any} />
     </div>
   );
 }

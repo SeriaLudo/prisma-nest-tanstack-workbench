@@ -1,24 +1,81 @@
-import { getStringColumn } from "./columns/stringColumn";
-import { getNumberColumn } from "./columns/numberColumn";
-import { getBooleanColumn } from "./columns/booleanColumn";
-import { getDateColumn } from "./columns/dateColumn";
-import { getActionsColumn } from "./columns/actionsColumn";
-
-export function getColumnDefs(rowData: any[]) {
-  if (!rowData || rowData.length === 0) return [];
-
-  const sampleRow = rowData[0];
-  return Object.keys(sampleRow)
-    .map((key) => {
-      const value = sampleRow[key];
-
-      if (typeof value === "string") return getStringColumn(key);
-      if (typeof value === "number") return getNumberColumn(key);
-      if (typeof value === "boolean") return getBooleanColumn(key);
-      if (value instanceof Date || !isNaN(Date.parse(value)))
-        return getDateColumn(key);
-
-      return { headerName: key, field: key }; // Default column
-    })
-    .concat(getActionsColumn());
-}
+export const columnDefs = [
+  {
+    headerName: "ID",
+    field: "id",
+    filter: "agNumberColumnFilter",
+    sortable: true,
+    resizable: true,
+    width: 100,
+  },
+  {
+    headerName: "Name",
+    field: "name",
+    filter: "agTextColumnFilter",
+    sortable: true,
+    resizable: true,
+    editable: true,
+  },
+  {
+    headerName: "Age",
+    field: "age",
+    filter: "agNumberColumnFilter",
+    sortable: true,
+    resizable: true,
+    editable: true,
+    valueFormatter: (params: any) => params.value.toLocaleString(),
+  },
+  {
+    headerName: "Active",
+    field: "isActive",
+    filter: "agBooleanColumnFilter",
+    sortable: true,
+    resizable: true,
+    editable: true,
+    cellRenderer: (params: any) => (params.value ? "✔️" : "❌"),
+    cellEditor: "agCheckboxCellEditor",
+  },
+  {
+    headerName: "Joined Date",
+    field: "joined",
+    filter: "agDateColumnFilter",
+    sortable: true,
+    resizable: true,
+    editable: true,
+    valueFormatter: (params: any) =>
+      params.value ? new Date(params.value).toLocaleDateString() : "",
+  },
+  {
+    headerName: "Balance ($)",
+    field: "balance",
+    filter: "agNumberColumnFilter",
+    sortable: true,
+    resizable: true,
+    editable: true,
+    valueFormatter: (params: any) => `$${params.value.toFixed(2)}`,
+  },
+  {
+    headerName: "Email",
+    field: "email",
+    filter: "agTextColumnFilter",
+    sortable: true,
+    resizable: true,
+    editable: true,
+  },
+  {
+    headerName: "Score",
+    field: "score",
+    filter: "agNumberColumnFilter",
+    sortable: true,
+    resizable: true,
+    editable: true,
+    valueFormatter: (params: any) => params.value.toFixed(2),
+  },
+  {
+    headerName: "Actions",
+    field: "actions",
+    cellRenderer: (params: any) => {
+      return `<button onClick="alert('Edit ${params.data.id}')">✏️ Edit</button>
+              <button onClick="alert('Delete ${params.data.id}')">🗑️ Delete</button>`;
+    },
+  },
+];
