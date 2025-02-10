@@ -1,4 +1,6 @@
-# Frontend/Backend Template
+# Frontend/Backend Template Workbench
+
+Rudimentary implementations for tanstack table and ag-grid
 
 ## Client
 
