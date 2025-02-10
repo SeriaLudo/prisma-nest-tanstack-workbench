@@ -11,12 +11,19 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as TanstackImport } from './routes/tanstack'
 import { Route as LoginImport } from './routes/login'
 import { Route as AgGridImport } from './routes/ag-grid'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
+
+const TanstackRoute = TanstackImport.update({
+  id: '/tanstack',
+  path: '/tanstack',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const LoginRoute = LoginImport.update({
   id: '/login',
@@ -74,6 +81,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginImport
       parentRoute: typeof rootRoute
     }
+    '/tanstack': {
+      id: '/tanstack'
+      path: '/tanstack'
+      fullPath: '/tanstack'
+      preLoaderRoute: typeof TanstackImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -84,6 +98,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/ag-grid': typeof AgGridRoute
   '/login': typeof LoginRoute
+  '/tanstack': typeof TanstackRoute
 }
 
 export interface FileRoutesByTo {
@@ -91,6 +106,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/ag-grid': typeof AgGridRoute
   '/login': typeof LoginRoute
+  '/tanstack': typeof TanstackRoute
 }
 
 export interface FileRoutesById {
@@ -99,14 +115,15 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/ag-grid': typeof AgGridRoute
   '/login': typeof LoginRoute
+  '/tanstack': typeof TanstackRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/ag-grid' | '/login'
+  fullPaths: '/' | '/about' | '/ag-grid' | '/login' | '/tanstack'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/ag-grid' | '/login'
-  id: '__root__' | '/' | '/about' | '/ag-grid' | '/login'
+  to: '/' | '/about' | '/ag-grid' | '/login' | '/tanstack'
+  id: '__root__' | '/' | '/about' | '/ag-grid' | '/login' | '/tanstack'
   fileRoutesById: FileRoutesById
 }
 
@@ -115,6 +132,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AgGridRoute: typeof AgGridRoute
   LoginRoute: typeof LoginRoute
+  TanstackRoute: typeof TanstackRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -122,6 +140,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AgGridRoute: AgGridRoute,
   LoginRoute: LoginRoute,
+  TanstackRoute: TanstackRoute,
 }
 
 export const routeTree = rootRoute
@@ -137,7 +156,8 @@ export const routeTree = rootRoute
         "/",
         "/about",
         "/ag-grid",
-        "/login"
+        "/login",
+        "/tanstack"
       ]
     },
     "/": {
@@ -151,6 +171,9 @@ export const routeTree = rootRoute
     },
     "/login": {
       "filePath": "login.tsx"
+    },
+    "/tanstack": {
+      "filePath": "tanstack.tsx"
     }
   }
 }

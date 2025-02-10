@@ -15,10 +15,7 @@ export default function AgGridComponent() {
   }, [rowData]);
 
   return (
-    <div
-      className="ag-theme-alpine"
-      style={{ height: 500, width: "100%", backgroundColor: "red" }}
-    >
+    <div className="ag-theme-alpine h-200">
       <AgGridReact rowData={rowData} columnDefs={columns as any} />
     </div>
   );
