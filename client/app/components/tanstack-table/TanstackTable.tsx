@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   useReactTable,
   getCoreRowModel,
@@ -37,7 +37,7 @@ export default function TanStackTable() {
     null
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     const categorizedData = rowData.map((user) => ({
       ...user,
       category: getJoinedCategory(user.joined),
@@ -45,7 +45,7 @@ export default function TanStackTable() {
     setData(categorizedData);
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const interval = setInterval(() => {
       setHighlightedRow(Math.floor(Math.random() * rowData.length));
     }, 1000);
@@ -56,8 +56,19 @@ export default function TanStackTable() {
     "bg-yellow-200": highlightedRow !== null,
   });
 
+  const handleGroupingChange = () => {
+    // we are only grouping by joined, so let's use this to group/ungroup by category
+    const newGrouping = grouping.includes("category")
+      ? []
+      : ["category", ...grouping];
+    setGrouping(newGrouping);
+  };
+
   return (
     <div className="p-4 overflow-x-scroll">
+      <button onClick={handleGroupingChange}>
+        {!!grouping.length ? "Ungroup" : "Group"}
+      </button>
       <table className="border-collapse border border-gray-300 ">
         <thead className="bg-blue-200">
           {table.getHeaderGroups().map((headerGroup) => (
