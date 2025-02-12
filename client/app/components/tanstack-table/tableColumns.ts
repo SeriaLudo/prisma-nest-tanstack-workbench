@@ -87,4 +87,9 @@ export const columns: ColumnDef<any>[] = [
     cell: SelectDropdownCell,
     size: 100,
   },
+  {
+    accessorKey: "category",
+    header: "Date Groups",
+    enableGrouping: true,
+  },
 ];
