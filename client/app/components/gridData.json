@@ -4,7 +4,7 @@
     "name": "Alice",
     "age": 64,
     "isActive": false,
-    "joined": "2021-02-23",
+    "joined": "2023-02-15",
     "balance": 1290.17,
     "email": "user6092@example.com",
     "score": 7.6059282521
@@ -14,7 +14,7 @@
     "name": "David",
     "age": 41,
     "isActive": true,
-    "joined": "2023-08-08",
+    "joined": "2024-02-18",
     "balance": 867.06,
     "email": "user1795@example.com",
     "score": 44.0037455196
@@ -24,7 +24,7 @@
     "name": "Charlie",
     "age": 52,
     "isActive": false,
-    "joined": "2021-03-16",
+    "joined": "2025-02-16",
     "balance": 1082.75,
     "email": "user5339@example.com",
     "score": 97.8430465712
@@ -34,7 +34,7 @@
     "name": "David",
     "age": 32,
     "isActive": false,
-    "joined": "2021-04-26",
+    "joined": "2025-03-10",
     "balance": 8033.96,
     "email": "user3098@example.com",
     "score": 86.0255310928
@@ -44,7 +44,7 @@
     "name": "Eve",
     "age": 32,
     "isActive": true,
-    "joined": "2023-05-14",
+    "joined": "2025-05-14",
     "balance": 5752.23,
     "email": "user9154@example.com",
     "score": 27.2941847457
@@ -54,7 +54,7 @@
     "name": "Eve",
     "age": 20,
     "isActive": true,
-    "joined": "2023-10-12",
+    "joined": "2025-04-12",
     "balance": 4215.75,
     "email": "user9451@example.com",
     "score": 95.9458656072
@@ -64,7 +64,7 @@
     "name": "David",
     "age": 37,
     "isActive": true,
-    "joined": "2020-10-13",
+    "joined": "2025-10-13",
     "balance": 5989.15,
     "email": "user9659@example.com",
     "score": 19.3405143831
