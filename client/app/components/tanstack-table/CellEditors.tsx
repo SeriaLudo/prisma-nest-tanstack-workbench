@@ -1,100 +1,112 @@
-import React from "react";
+import React, { useState } from "react";
 
-// 🔹 Text Input Editor
-export function TextInputCell({ getValue, row, column, table }) {
-  const initialValue = getValue();
-  const [value, setValue] = React.useState(initialValue);
+// 🔹 Generic Inline Editor Wrapper
+function EditableCell({ getValue, row, column, table, children }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const value = getValue();
 
-  const onBlur = () => {
-    table.options.meta?.updateData(row.index, column.id, value);
+  const handleBlur = (newValue) => {
+    table.options.meta?.updateData(row.index, column.id, newValue);
+    setIsEditing(false);
   };
 
+  return isEditing ? (
+    children(handleBlur)
+  ) : (
+    <div onClick={() => setIsEditing(true)} className="cursor-pointer p-1">
+      {value}
+    </div>
+  );
+}
+
+// 🔹 Text Input Editor
+export function TextInputCell(props) {
   return (
-    <input
-      type="text"
-      className="border p-1 w-full"
-      value={value}
-      onChange={(e) => setValue(e.target.value)}
-      onBlur={onBlur}
-    />
+    <EditableCell {...props}>
+      {(handleBlur) => (
+        <input
+          type="text"
+          className="border p-1 w-full"
+          autoFocus
+          defaultValue={props.getValue()}
+          onBlur={(e) => handleBlur(e.target.value)}
+        />
+      )}
+    </EditableCell>
   );
 }
 
 // 🔹 Number Input Editor
-export function NumberInputCell({ getValue, row, column, table }) {
-  const initialValue = getValue();
-  const [value, setValue] = React.useState(initialValue);
-
-  const onBlur = () => {
-    table.options.meta?.updateData(row.index, column.id, Number(value));
-  };
-
+export function NumberInputCell(props) {
   return (
-    <input
-      type="number"
-      className="border p-1 w-full"
-      value={value}
-      onChange={(e) => setValue(e.target.value)}
-      onBlur={onBlur}
-    />
+    <EditableCell {...props}>
+      {(handleBlur) => (
+        <input
+          type="number"
+          className="border p-1 w-full"
+          autoFocus
+          defaultValue={props.getValue()}
+          onBlur={(e) => handleBlur(Number(e.target.value))}
+        />
+      )}
+    </EditableCell>
   );
 }
 
-// 🔹 Boolean Checkbox Editor
+// 🔹 Boolean Checkbox Editor (Instant Toggle)
 export function BooleanCheckboxCell({ getValue, row, column, table }) {
-  const initialValue = getValue();
-  const [checked, setChecked] = React.useState(initialValue);
+  const value = getValue();
 
-  const onChange = () => {
-    const newValue = !checked;
-    setChecked(newValue);
-    table.options.meta?.updateData(row.index, column.id, newValue);
+  const onClick = () => {
+    table.options.meta?.updateData(row.index, column.id, !value);
   };
 
   return (
-    <div className="flex justify-center">
-      <span onClick={onChange} className="cursor-pointer">
-        {checked ? "✔️" : ""}
-      </span>
+    <div
+      className="flex justify-center items-center cursor-pointer"
+      onClick={onClick}
+      role="checkbox"
+      aria-checked={value}
+      style={{ height: "100%", flexGrow: 1 }}
+    >
+      <span>{value ? "✔️" : ""}</span>
     </div>
   );
 }
 
 // 🔹 Date Picker Editor
-export function DatePickerCell({ getValue, row, column, table }) {
-  const initialValue = getValue();
-  const [value, setValue] = React.useState(initialValue);
-
-  const onChange = (e) => {
-    setValue(e.target.value);
-    table.options.meta?.updateData(row.index, column.id, e.target.value);
-  };
-
+export function DatePickerCell(props) {
   return (
-    <input
-      type="date"
-      className="border p-1 w-full"
-      value={value}
-      onChange={onChange}
-    />
+    <EditableCell {...props}>
+      {(handleBlur) => (
+        <input
+          type="date"
+          className="border p-1"
+          autoFocus
+          defaultValue={props.getValue()}
+          onBlur={(e) => handleBlur(e.target.value)}
+        />
+      )}
+    </EditableCell>
   );
 }
 
 // 🔹 Select Dropdown Editor
-export function SelectDropdownCell({ getValue, row, column, table }) {
-  const initialValue = getValue();
-  const [value, setValue] = React.useState(initialValue);
-
-  const onChange = (e) => {
-    setValue(e.target.value);
-    table.options.meta?.updateData(row.index, column.id, e.target.value);
-  };
-
+export function SelectDropdownCell(props) {
   return (
-    <select className="border p-1 w-full" value={value} onChange={onChange}>
-      <option value="Option 1">Option 1</option>
-      <option value="Option 2">Option 2</option>
-      <option value="Option 3">Option 3</option>
-    </select>
+    <EditableCell {...props}>
+      {(handleBlur) => (
+        <select
+          className="border p-1 w-full"
+          autoFocus
+          defaultValue={props.getValue()}
+          onBlur={(e) => handleBlur(e.target.value)}
+        >
+          <option value="Option 1">Option 1</option>
+          <option value="Option 2">Option 2</option>
+          <option value="Option 3">Option 3</option>
+        </select>
+      )}
+    </EditableCell>
   );
 }
