@@ -1,11 +1,18 @@
 // app/routes/__root.tsx
-import { Outlet, createRootRoute } from "@tanstack/react-router";
+import {
+  Outlet,
+  createRootRoute,
+  createRootRouteWithContext,
+} from "@tanstack/react-router";
 import { Meta, Scripts } from "@tanstack/start";
 import React, { ReactNode } from "react";
+import type { QueryClient } from "@tanstack/react-query";
 
 import appCss from "@/styles/app.css?url";
 
-export const Route = createRootRoute({
+export const Route = createRootRouteWithContext<{
+  queryClient: QueryClient;
+}>()({
   head: () => ({
     meta: [
       {

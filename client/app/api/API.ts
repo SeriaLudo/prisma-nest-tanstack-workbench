@@ -1,9 +1,29 @@
-// setup basic routes for API
+// api.ts
+import apiClient from "./apiClient";
 
-const baseUrl = process.env.BASE_URL;
+export interface UserData {
+  id: number;
+  name: string;
+  email: string;
+  featureFlags: string[];
+}
 
-export const getUsers = async () => {
-  const response = await fetch(`${baseUrl}/auth/all`);
-  console.log(response);
-  return response.json();
+export interface LoginResponse {
+  token: string;
+  user: UserData;
+}
+
+export const fetchUserData = async (): Promise<UserData> => {
+  const response = await apiClient.get("/auth/me");
+  return response.data;
+};
+
+export const login = async (
+  username: string,
+  password: string
+): Promise<LoginResponse> => {
+  const response = await apiClient.post("/auth/login", { username, password });
+  // Optionally, set token in localStorage here if needed.
+  localStorage.setItem("authToken", response.data.token);
+  return response.data;
 };

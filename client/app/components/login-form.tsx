@@ -1,19 +1,39 @@
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+// components/LoginForm.tsx
+import { useState } from "react";
+import { useLogin } from "@/api/query-hooks/login/useLogin";
+import { useNavigate } from "@tanstack/react-router";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const { mutate, isPending, error } = useLogin({
+    onSuccess: () => {
+      // Redirect to /admin upon successful login
+      navigate({ to: "/admin" });
+    },
+  });
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    mutate({ username: email, password });
+  };
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -24,7 +44,7 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
@@ -33,6 +53,8 @@ export function LoginForm({
                   type="email"
                   placeholder="m@example.com"
                   required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               <div className="grid gap-2">
@@ -45,13 +67,21 @@ export function LoginForm({
                     Forgot your password?
                   </a>
                 </div>
-                <Input id="password" type="password" required />
+                <Input
+                  id="password"
+                  type="password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               </div>
-              <Button type="submit" className="w-full">
-                Login
-              </Button>
-              <Button variant="outline" className="w-full">
-                Login with Google
+              {error && (
+                <p className="text-red-500 text-sm">
+                  {error.message || "Login failed"}
+                </p>
+              )}
+              <Button type="submit" className="w-full" disabled={isPending}>
+                {isPending ? "Logging in..." : "Login"}
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
@@ -64,5 +94,5 @@ export function LoginForm({
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
