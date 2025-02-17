@@ -34,6 +34,5 @@ services:
 
 volumes:
   app2-postgres-data:
-  app2-postgres-data-test:
   app2-redis-data:
   app2-redisinsight-data:

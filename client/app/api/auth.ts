@@ -19,3 +19,7 @@ export const getUser = () => {
     return null;
   }
 };
+
+export const isLoggedIn = () => {
+  return getUser() !== null;
+};
