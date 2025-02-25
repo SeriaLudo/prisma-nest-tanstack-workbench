@@ -9,6 +9,7 @@ import React, { ReactNode } from "react";
 import type { QueryClient } from "@tanstack/react-query";
 
 import appCss from "@/styles/app.css?url";
+import { isLoggedIn } from "@/api/auth";
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
@@ -45,6 +46,8 @@ function RootComponent() {
 }
 
 function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
+  // const isAuthenticated = isLoggedIn();
+  const isAuthenticated = false;
   return (
     <html>
       <head>
@@ -56,11 +59,18 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
           className="bg-gray-800 text-white p-4 h-10 flex gap-3 items-start justify-end"
         >
           <a href="/">Home</a>
-          <a href="/login">Login</a>
+          {isAuthenticated ? (
+            <a href="/logout">Logout</a>
+          ) : (
+            <a href="/login">Login</a>
+          )}
+          <a href="/admin">Admin</a>
+
           <a href="/admin">Admin</a>
           <a href="/about">About</a>
           <a href="/ag-grid">Ag-Grid</a>
           <a href="/tanstack">TanStack</a>
+          <a href="/address">Address</a>
         </div>
         {children}
         <Scripts />

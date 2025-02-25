@@ -15,6 +15,7 @@ import { Route as TanstackImport } from './routes/tanstack'
 import { Route as LoginImport } from './routes/login'
 import { Route as AgGridImport } from './routes/ag-grid'
 import { Route as AdminImport } from './routes/admin'
+import { Route as AddressImport } from './routes/address'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
 
@@ -41,6 +42,12 @@ const AgGridRoute = AgGridImport.update({
 const AdminRoute = AdminImport.update({
   id: '/admin',
   path: '/admin',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AddressRoute = AddressImport.update({
+  id: '/address',
+  path: '/address',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -72,6 +79,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutImport
+      parentRoute: typeof rootRoute
+    }
+    '/address': {
+      id: '/address'
+      path: '/address'
+      fullPath: '/address'
+      preLoaderRoute: typeof AddressImport
       parentRoute: typeof rootRoute
     }
     '/admin': {
@@ -110,6 +124,7 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/address': typeof AddressRoute
   '/admin': typeof AdminRoute
   '/ag-grid': typeof AgGridRoute
   '/login': typeof LoginRoute
@@ -119,6 +134,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/address': typeof AddressRoute
   '/admin': typeof AdminRoute
   '/ag-grid': typeof AgGridRoute
   '/login': typeof LoginRoute
@@ -129,6 +145,7 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/address': typeof AddressRoute
   '/admin': typeof AdminRoute
   '/ag-grid': typeof AgGridRoute
   '/login': typeof LoginRoute
@@ -137,13 +154,28 @@ export interface FileRoutesById {
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/admin' | '/ag-grid' | '/login' | '/tanstack'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/address'
+    | '/admin'
+    | '/ag-grid'
+    | '/login'
+    | '/tanstack'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/admin' | '/ag-grid' | '/login' | '/tanstack'
+  to:
+    | '/'
+    | '/about'
+    | '/address'
+    | '/admin'
+    | '/ag-grid'
+    | '/login'
+    | '/tanstack'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/address'
     | '/admin'
     | '/ag-grid'
     | '/login'
@@ -154,6 +186,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AddressRoute: typeof AddressRoute
   AdminRoute: typeof AdminRoute
   AgGridRoute: typeof AgGridRoute
   LoginRoute: typeof LoginRoute
@@ -163,6 +196,7 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AddressRoute: AddressRoute,
   AdminRoute: AdminRoute,
   AgGridRoute: AgGridRoute,
   LoginRoute: LoginRoute,
@@ -181,6 +215,7 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/about",
+        "/address",
         "/admin",
         "/ag-grid",
         "/login",
@@ -192,6 +227,9 @@ export const routeTree = rootRoute
     },
     "/about": {
       "filePath": "about.tsx"
+    },
+    "/address": {
+      "filePath": "address.tsx"
     },
     "/admin": {
       "filePath": "admin.tsx"

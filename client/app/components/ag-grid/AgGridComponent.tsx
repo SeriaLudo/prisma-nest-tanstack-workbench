@@ -9,7 +9,7 @@ ModuleRegistry.registerModules([AllCommunityModule]);
 export default function AgGridComponent() {
   return (
     <div className="ag-theme-alpine h-200">
-      {/* <AgGridReact rowData={rowData} columnDefs={columns as any} /> */}
+      <AgGridReact rowData={rowData} columnDefs={columns as any} />
     </div>
   );
 }
