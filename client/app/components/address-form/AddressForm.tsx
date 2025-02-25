@@ -42,24 +42,36 @@ const usStates = [
   // Add additional states as needed.
 ];
 
+// Default values for a new address
+const defaultAddress: AddressValues = {
+  label: "Office",
+  address1: "",
+  address2: "",
+  city: "",
+  state: "",
+  country: "US",
+  postalCode: "",
+};
+
 export default function AddressForm({
   onSubmit,
+  initialAddress,
 }: {
   onSubmit: (data: { address: AddressValues }) => void;
+  initialAddress?: Partial<AddressValues>;
 }) {
+  // Merge default values with any provided initial address
+  const initialFormState: AddressValues = {
+    ...defaultAddress,
+    ...initialAddress,
+  };
+
   // Get form state to access values directly
-  const [formState, setFormState] = React.useState<AddressValues>({
-    label: "Office",
-    address1: "",
-    address2: "",
-    city: "",
-    state: "",
-    country: "US",
-    postalCode: "",
-  });
+  const [formState, setFormState] =
+    React.useState<AddressValues>(initialFormState);
 
   const form = useForm({
-    defaultValues: formState,
+    defaultValues: initialFormState,
     onSubmit: async ({ value }) => {
       // Emit the standardized JSON output.
       onSubmit({ address: value });
