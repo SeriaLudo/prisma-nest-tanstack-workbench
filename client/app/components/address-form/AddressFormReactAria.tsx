@@ -19,11 +19,11 @@ export type AddressValues = {
 };
 
 // Dummy country list and US states for dropdowns
-const countries = [
-  { id: "US", name: "United States" },
-  { id: "CA", name: "Canada" },
-  { id: "GB", name: "United Kingdom" },
-];
+// const countries = [
+//   { id: "US", name: "United States" },
+//   { id: "CA", name: "Canada" },
+//   { id: "GB", name: "United Kingdom" },
+// ];
 
 const usStates = [
   { id: "AL", name: "Alabama" },
@@ -192,6 +192,32 @@ export default function AddressFormAria({
   onSubmit: (data: { address: AddressValues }) => void;
   initialAddress?: Partial<AddressValues>;
 }) {
+  // Add this to your component
+  const [countries, setCountries] = React.useState([]);
+
+  React.useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const response = await fetch("https://restcountries.com/v3.1/all");
+        const data = await response.json();
+
+        // Format data to match your component's expected format
+        const formattedCountries = data
+          .map((country) => ({
+            id: country.cca2, // ISO 3166-1 alpha-2 code
+            name: country.name.common,
+          }))
+          .sort((a, b) => a.name.localeCompare(b.name));
+
+        setCountries(formattedCountries);
+      } catch (error) {
+        console.error("Error fetching countries:", error);
+        // Fallback to your default countries array
+      }
+    };
+
+    fetchCountries();
+  }, []);
   // Create a key for the form based on initialAddress to force re-initialization
   const formKey = React.useMemo(
     () => (initialAddress ? JSON.stringify(initialAddress) : "empty"),
