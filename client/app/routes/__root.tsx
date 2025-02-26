@@ -71,6 +71,7 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
           <a href="/ag-grid">Ag-Grid</a>
           <a href="/tanstack">TanStack</a>
           <a href="/address">Address</a>
+          <a href="/address-aria">Address Aria</a>
         </div>
         {children}
         <Scripts />

@@ -53,7 +53,7 @@ const defaultAddress: AddressValues = {
   postalCode: "",
 };
 
-export default function AddressForm({
+export default function AddressFormTanstack({
   onSubmit,
   initialAddress,
 }: {

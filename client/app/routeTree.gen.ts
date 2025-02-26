@@ -15,6 +15,7 @@ import { Route as TanstackImport } from './routes/tanstack'
 import { Route as LoginImport } from './routes/login'
 import { Route as AgGridImport } from './routes/ag-grid'
 import { Route as AdminImport } from './routes/admin'
+import { Route as AddressAriaImport } from './routes/address-aria'
 import { Route as AddressImport } from './routes/address'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
@@ -42,6 +43,12 @@ const AgGridRoute = AgGridImport.update({
 const AdminRoute = AdminImport.update({
   id: '/admin',
   path: '/admin',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AddressAriaRoute = AddressAriaImport.update({
+  id: '/address-aria',
+  path: '/address-aria',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -88,6 +95,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AddressImport
       parentRoute: typeof rootRoute
     }
+    '/address-aria': {
+      id: '/address-aria'
+      path: '/address-aria'
+      fullPath: '/address-aria'
+      preLoaderRoute: typeof AddressAriaImport
+      parentRoute: typeof rootRoute
+    }
     '/admin': {
       id: '/admin'
       path: '/admin'
@@ -125,6 +139,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/address': typeof AddressRoute
+  '/address-aria': typeof AddressAriaRoute
   '/admin': typeof AdminRoute
   '/ag-grid': typeof AgGridRoute
   '/login': typeof LoginRoute
@@ -135,6 +150,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/address': typeof AddressRoute
+  '/address-aria': typeof AddressAriaRoute
   '/admin': typeof AdminRoute
   '/ag-grid': typeof AgGridRoute
   '/login': typeof LoginRoute
@@ -146,6 +162,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/address': typeof AddressRoute
+  '/address-aria': typeof AddressAriaRoute
   '/admin': typeof AdminRoute
   '/ag-grid': typeof AgGridRoute
   '/login': typeof LoginRoute
@@ -158,6 +175,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/address'
+    | '/address-aria'
     | '/admin'
     | '/ag-grid'
     | '/login'
@@ -167,6 +185,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/address'
+    | '/address-aria'
     | '/admin'
     | '/ag-grid'
     | '/login'
@@ -176,6 +195,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/address'
+    | '/address-aria'
     | '/admin'
     | '/ag-grid'
     | '/login'
@@ -187,6 +207,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   AddressRoute: typeof AddressRoute
+  AddressAriaRoute: typeof AddressAriaRoute
   AdminRoute: typeof AdminRoute
   AgGridRoute: typeof AgGridRoute
   LoginRoute: typeof LoginRoute
@@ -197,6 +218,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AddressRoute: AddressRoute,
+  AddressAriaRoute: AddressAriaRoute,
   AdminRoute: AdminRoute,
   AgGridRoute: AgGridRoute,
   LoginRoute: LoginRoute,
@@ -216,6 +238,7 @@ export const routeTree = rootRoute
         "/",
         "/about",
         "/address",
+        "/address-aria",
         "/admin",
         "/ag-grid",
         "/login",
@@ -230,6 +253,9 @@ export const routeTree = rootRoute
     },
     "/address": {
       "filePath": "address.tsx"
+    },
+    "/address-aria": {
+      "filePath": "address-aria.tsx"
     },
     "/admin": {
       "filePath": "admin.tsx"
